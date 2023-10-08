@@ -1,0 +1,14 @@
+\babel@toc {spanish}{}\relax 
+\beamer@sectionintoc {1}{Introducción}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{¿Qué es Moogle?}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Descripción}{5}{0}{1}
+\beamer@sectionintoc {2}{Funcionamiento}{7}{0}{2}
+\beamer@subsectionintoc {2}{1}{Base de Datos}{8}{0}{2}
+\beamer@subsectionintoc {2}{2}{Interacción con el usuario}{9}{0}{2}
+\beamer@sectionintoc {3}{Estructura}{10}{0}{3}
+\beamer@subsectionintoc {3}{1}{Clase Moogle:}{12}{0}{3}
+\beamer@subsectionintoc {3}{2}{Clase Implementación}{13}{0}{3}
+\beamer@subsectionintoc {3}{3}{Clase Levenshtein:}{23}{0}{3}
+\beamer@subsectionintoc {3}{4}{Clase Matriz}{24}{0}{3}
+\beamer@subsectionintoc {3}{5}{Clase Operadores:}{25}{0}{3}
+\beamer@subsectionintoc {3}{6}{Clase Snippet:}{26}{0}{3}
