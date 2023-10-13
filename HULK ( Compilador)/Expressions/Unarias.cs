@@ -1,24 +1,39 @@
 namespace Hulk
 {
-    public class Unarias : Expressions
+    public class Unary : Expressions
     {
-          public enum Operators
+        public enum Operators
         {
-           Log, Sen, Cos, Tan, Cot, Sqrt, Not,
+            Log, Sen, Cos, Tan, Cot, Sqrt, Not,
         }
         public Expressions argument;
         Operators operators;
 
-        public Unarias(Expressions argument, Operators operators)
+        public Unary(Expressions argument, Operators operators)
         {
             this.argument = argument;
-            this.operators= operators;
+            this.operators = operators;
 
         }
-
-        public override string Evaluate()
+        public override double Evaluate()
         {
-            throw new NotImplementedException();
+            switch (this.operators)
+            {
+                case Operators.Log:
+                    return argument.Evaluate();
+                case Operators.Sen:
+                    return argument.Evaluate();
+                case Operators.Cos:
+                    return argument.Evaluate();
+                case Operators.Tan:
+                    return argument.Evaluate();
+                case Operators.Cot:
+                    return argument.Evaluate();
+                case Operators.Sqrt:
+                    return argument.Evaluate();
+                default:
+                    return argument.Evaluate();
+            }
         }
     }
 }

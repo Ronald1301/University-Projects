@@ -1,0 +1,114 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[left=2.5cm, right=2.5cm, top=2cm, bottom=3cm]{geometry}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[dvipinamos]{xcolor}
+%La opción pages puede ser all (para todo el documento) o some, para algunas partes del documento
+\usepackage[pages=all]{background}
+% configuración
+\backgroundsetup{
+	scale=1, %escala de la imagen, es recomendable que sea del mismo tamaño que el pdf
+	color=black, %fondo a usar para transparencia
+	opacity=0.5, %nivel de transparencia
+	angle=0, %en caso de querer una rotación
+	contents={
+		\includegraphics[width=\paperwidth,height=\paperheight]{fondo1.jpg}
+	}
+}
+
+\title{2do Proyecto de Programación \\ {\textcolor{green}{HULK}}: Havana University Language for Kompilers}
+\author{Ronald Provance Valladares C113}
+\date{}
+
+\begin{document}
+	\maketitle
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=6cm]{icono.jpg}
+	\end{figure}
+	
+	\begin{center}
+		\Large\title{Facultad de Matemática y Computación }\\ 
+	\Large\title{Universidad de la Habana}
+	\end{center}
+	
+	
+	\begin{abstract}
+		
+		\begin{center}
+			\large El lenguaje {\textcolor{green}{HULK}} (simplificado)
+		\end{center}
+		
+		\normalsize{HULK es un lenguaje de programación imperativo, funcional, estático y fuertemente tipado. Casi todas las instrucciones en HULK son expresiones. En particular,hasta el momento, se compone solamente de expresiones que pueden escribirse en \textbf{una línea}. Y para ello se ha elaborado este proyecto,con el fin de compilar dicho lenguaje.el cual se divide en cuatro secciones:}
+		
+		\begin{enumerate}
+			\item Analizador Léxico      \item Analizador Semántico
+			\item Analizador Sintáctico  \item Evaluación de código
+		\end{enumerate}
+		
+	\end{abstract}
+	
+	
+	\section{\color{violet}Introducción}
+	
+	\begin{center}
+			\large Todo lo básico que debe conocer para poder usar \textbf{\textcolor{green}{HULK}}:
+	\end{center}
+
+    El intérprete de HULK será una aplicación de consola, donde el usuario puede introducir una expresión de HULK, presionar ENTER, e immediatamente se verá el resultado de evaluar expresión (si lo hubiere) 
+	
+	\subsection{¿Qué es un Compilador?}
+	Un compilador es un programa o software que se encarga de traducir el código fuente de un programa escrito en un lenguaje de programación de alto nivel a un lenguaje de programación de bajo nivel, generalmente lenguaje máquina o lenguaje ensamblador, que pueda ser entendido y ejecutado por la computadora. 
+	
+	El compilador realiza este proceso en varias etapas, que incluyen el análisis léxico, el análisis sintáctico, el análisis semántico, la generación de código. entre otros.pero al ser un proyecto sencillo, a menor escala solo consta de estas etapas.
+	
+	Los compiladores son esenciales para el desarrollo de software, ya que permiten a los programadores escribir código en lenguajes de alto nivel más legibles y comprensibles, en lugar de tener que escribir directamente en lenguaje máquina.
+	
+	\section{\color{violet}Estructura}
+	
+	\subsection{Análisis Léxico}
+	
+	En este proceso la entrada dada por el usuario es analizada y la convierto en una secuencia de \textbf{Token} en el orden en que se va analizando la entrada guardándolos en una lista. Seguramente se preguntarán que es un token, no es mas que una secuencia de caracteres llamada cadena; estos token pueden ser de varios tipos como palabras claves,llamadas \textbf{keyword} como por ejemplo: int, if,function,entre otras; otro tipo son los \textbf{operadores} o conocidos normalmente como símbolos,los cuales son: +, |, >=, entre otros; también están los \textbf{identificadores} conocidos por los programadores como variables: x, z,entre otras; también existen declaraciones de \textbf{funciones} creadas por el usuario,como los son: el calculo del factorial de un número(Fact),los términos de la sucesión de Fibonacci(Fib) y por ultimo pero no menos importantes las expresiones \textbf{numéricas},\textbf{cadenas} y \textbf{booleanos}. Donde cada tipo de token lo guardo en un diccionario
+	
+	 
+	\subsection{Análisis Sintáctico}
+	\subsection{Análisis Semántico}
+	\subsection{Evaluación de código}
+	
+	\section{\color{red}Errores}
+	
+	  \begin{center}
+		En HULK hay 3 tipos de errores que usted debe detectar. En caso de detectarse un error, el intérprete debe imprimir una línea indicando el error que sea lo más informativa posible.
+	  \end{center}
+
+    \renewcommand{\labelenumi}{$\bigstar$}
+	\begin{enumerate}
+		
+		\color{red}
+		\item \normalcolor \textbf{\textit{Error léxico:}}\\
+		Errores que se producen durante el análisis léxico por la presencia de tokens inválidos\\
+		Ejemplos: 3x, "palabra
+		
+		\color{red}
+		\item \normalcolor \textbf{\textit{Error sintáctico:}}\\
+		Errores que se producen durante el análisis sintáctico por expresiones mal formadas como paréntesis no balanceados o expresiones incompletas.\\
+		Ejemplos: (let x=5 y=2 ) , (if(3==4) print(false))
+		
+		\color{red}
+		\item \normalcolor \textbf{\textit{Error semántico:}}\\
+		Errores que se producen durante el análisis semántico por el uso incorrecto de los tipos y argumentos.\\
+		Ejemplos: 5*true , "palabra">=3
+		
+	
+	\end{enumerate}
+	  
+
+
+	\begin{center}
+		\Huge\textcolor{violet}{¡Muchas Gracias!}
+	\end{center}
+	
+\end{document}

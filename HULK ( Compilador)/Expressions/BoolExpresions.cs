@@ -2,7 +2,7 @@ namespace Hulk
 {
     public class BoolExpresions : Expressions
     {
-          public enum Operators
+        public enum Operators
         {
          Less, More, LessOrEqual, MoreOrEqual, DoubleEqual, NoEqual,  And, Or,
           
@@ -19,7 +19,7 @@ namespace Hulk
 
         }
 
-        public override string Evaluate()
+        public override double Evaluate()
         {
             throw new NotImplementedException();
         }

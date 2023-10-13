@@ -1,0 +1,15 @@
+C:\PROYECTOS GITHUB\HULK ( Compilador)\bin\Debug\net7.0\HULK ( Compilador).exe
+C:\PROYECTOS GITHUB\HULK ( Compilador)\bin\Debug\net7.0\HULK ( Compilador).deps.json
+C:\PROYECTOS GITHUB\HULK ( Compilador)\bin\Debug\net7.0\HULK ( Compilador).runtimeconfig.json
+C:\PROYECTOS GITHUB\HULK ( Compilador)\bin\Debug\net7.0\HULK ( Compilador).dll
+C:\PROYECTOS GITHUB\HULK ( Compilador)\bin\Debug\net7.0\HULK ( Compilador).pdb
+C:\PROYECTOS GITHUB\HULK ( Compilador)\obj\Debug\net7.0\HULK ( Compilador).csproj.AssemblyReference.cache
+C:\PROYECTOS GITHUB\HULK ( Compilador)\obj\Debug\net7.0\HULK ( Compilador).GeneratedMSBuildEditorConfig.editorconfig
+C:\PROYECTOS GITHUB\HULK ( Compilador)\obj\Debug\net7.0\HULK ( Compilador).AssemblyInfoInputs.cache
+C:\PROYECTOS GITHUB\HULK ( Compilador)\obj\Debug\net7.0\HULK ( Compilador).AssemblyInfo.cs
+C:\PROYECTOS GITHUB\HULK ( Compilador)\obj\Debug\net7.0\HULK ( Compilador).csproj.CoreCompileInputs.cache
+C:\PROYECTOS GITHUB\HULK ( Compilador)\obj\Debug\net7.0\HULK ( Compilador).dll
+C:\PROYECTOS GITHUB\HULK ( Compilador)\obj\Debug\net7.0\refint\HULK ( Compilador).dll
+C:\PROYECTOS GITHUB\HULK ( Compilador)\obj\Debug\net7.0\HULK ( Compilador).pdb
+C:\PROYECTOS GITHUB\HULK ( Compilador)\obj\Debug\net7.0\HULK ( Compilador).genruntimeconfig.cache
+C:\PROYECTOS GITHUB\HULK ( Compilador)\obj\Debug\net7.0\ref\HULK ( Compilador).dll
