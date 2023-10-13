@@ -45,7 +45,7 @@ namespace Hulk
             Token_Not, Token_And, Token_Or,
 
             //Caracteres Especiales
-            WhiteSpace, Open_Paren, Close_Paren, Open_Block, Close_Block, Open_Key, Close_Key, EndLine, Coma,
+            WhiteSpace, Open_Paren, Close_Paren, Open_Block, Close_Block, Open_Key, Close_Key, EndLine, Comma,
 
             //Booleans
             Token_True, Token_False,
@@ -104,7 +104,7 @@ namespace Hulk
             {"{", new Token(TokenType.Open_Key,"{")},
             {"}",new Token(TokenType.Close_Key,"}")},
             {";",new Token(TokenType.EndLine,";")},
-            {",", new Token(TokenType.Coma,",")},
+            {",", new Token(TokenType.Comma,",")},
 
             //Booleans
             {"true", new Token(TokenType.Token_True, "true")},

@@ -54,10 +54,10 @@ namespace Hulk
                         var result_let = M(tokens, actual + 3);
                         Expressions id = new Assignment(tokens[actual + 1], result_let.Item2);
 
-                        if (tokens[result_let.Item1 + 1].Type == Token.TokenType.Coma)
+                        if (tokens[result_let.Item1].Type == Token.TokenType.Comma)
                         {
-                            tokens.Insert(result_let.Item1 + 2, new Token(Token.TokenType.Token_Let, "let"));
-                            var result = M(tokens, result_let.Item1 + 3);
+                            tokens.Insert(result_let.Item1 + 1, new Token(Token.TokenType.Token_Let, "let"));
+                            var result = M(tokens, result_let.Item1 + 4);
                             Expressions second=new LetExpresions(id,result.Item2);
                             return (result.Item1,second);
                         }
@@ -118,7 +118,7 @@ namespace Hulk
         }
         public static (int, Expressions) E(List<Token> tokens, int actual, Expressions last)
         {
-            if (tokens[actual].Type == Token.TokenType.Token_And)
+            if (tokens[actual].Type == Token.TokenType.Token_DoubleEqual)
             {
                 var result_B = B(tokens, actual + 1, last);
                 Expressions doubleequalexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.Operators.DoubleEqual);
@@ -274,6 +274,14 @@ namespace Hulk
                     return (result_M.Item1 + 1, result_M.Item2);
                 }
                 else throw new Exception();
+            }
+            if (tokens[actual].Type == Token.TokenType.Identifier)
+            {
+                return  (actual+1,new iDExpresions(tokens[actual]));
+            }
+            if(tokens[actual].Type == Token.TokenType.Close_Paren)
+            {
+                
             }
             throw new Exception();
         }

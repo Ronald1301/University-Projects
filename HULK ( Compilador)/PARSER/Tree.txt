@@ -1,0 +1,12 @@
+HULK Grammar
+L=M;
+M= Print(M)| If(M) | Function(M) | Let | A
+A= B Z| !B Z
+Z= and A | or A | e
+B= W E
+E= <B | >B | <=B | >=B | ==B | !=B | e
+W= F X
+X= +W | -W |e
+F= T P
+P= *F | /F |^F | % F | e
+T= int | string | Function()| (M)

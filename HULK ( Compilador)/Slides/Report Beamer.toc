@@ -1,3 +1,0 @@
-\babel@toc {spanish}{}\relax 
-\beamer@sectionintoc {1}{Introducción}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{{\color {red}¿Qué es Hulk?}}{3}{0}{1}
