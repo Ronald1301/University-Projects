@@ -133,7 +133,7 @@ namespace Hulk
             //si con el caracter siguiente coincide con un operador,entonces me da esos caraccteres que forman un token
             if (start < line.Length - 1)
             {
-                if (Token.AllTokens.ContainsKey(opera + line[start + 1])) return (start++, opera += line[start + 1]);
+                if (Token.AllTokens.ContainsKey(opera + line[start + 1])) return (start+1, opera += line[start + 1]);
             }
             //si no se cumple lo anterior devuelvo el mismo caracter que corresponde a un token
             return (start, opera);
