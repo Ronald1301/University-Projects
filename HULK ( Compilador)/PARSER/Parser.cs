@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Net;
 
 namespace Hulk
 {
@@ -30,13 +31,13 @@ namespace Hulk
                 if (tokens[actual + 1].Type == Token.TokenType.Open_Paren)
                 {
                     var if_part = M(tokens, actual + 2, last);
-                    var body = M(tokens, if_part.Item1, last);
+                  //  var body = M(tokens, if_part.Item1, last);
                     if (tokens[if_part.Item1].Type == Token.TokenType.Close_Paren)
                     {
-                        var part2 = M(tokens, if_part.Item1 + 1);
-                        if (tokens[part2.Item1].Type == Token.TokenType.Token_Else)
+                        var body = M(tokens, if_part.Item1 + 1);
+                        if (tokens[body.Item1].Type == Token.TokenType.Token_Else)
                         {
-                            var else_part = M(tokens, body.Item1);
+                            var else_part = M(tokens, body.Item1+1);
                             return (else_part.Item1, new ConditionalExpresions(if_part.Item2, body.Item2, else_part.Item2));
                         }
                         throw new Exception();
@@ -57,17 +58,18 @@ namespace Hulk
                         if (tokens[result_let.Item1].Type == Token.TokenType.Comma)
                         {
                             tokens.Insert(result_let.Item1 + 1, new Token(Token.TokenType.Token_Let, "let"));
-                            var result = M(tokens, result_let.Item1 + 4);
-                            Expressions second=new LetExpresions(id,result.Item2);
-                            return (result.Item1,second);
+                            return M(tokens, result_let.Item1 + 1);
+                            //Expressions id2 = new Assignment(tokens[actual + 1], result.Item2);
+                            // Expressions second=new LetExpresions(id,result.Item2);
+                            //return (result.Item1, second);
                         }
                         if (tokens[result_let.Item1].Type == Token.TokenType.Token_In)
                         {
-                            var result = M(tokens, result_let.Item1 + 1);
-                            Expressions second=new LetExpresions(id,result.Item2);
-                            return (result.Item1,second);
+                            var result_in = M(tokens, result_let.Item1 + 1);
+                            Expressions second = new LetExpresions(id, result_in.Item2);
+                            return (result_in.Item1, second);
                         }
-                      //  Expressions let_in= new LetExpresions(id,second);
+                        //  Expressions let_in= new LetExpresions(id,second);
                         throw new Exception();
                     }
                     throw new Exception();
@@ -153,7 +155,6 @@ namespace Hulk
                 return (result_B.Item1, Lessexpresions);
             }
 
-
             if (tokens[actual].Type == Token.TokenType.Token_More)
             {
                 var result_B = B(tokens, actual + 1, last);
@@ -236,6 +237,10 @@ namespace Hulk
             {
                 return (actual + 1, new Atomic(tokens[actual]));
             }
+            if (tokens[actual].Type == Token.TokenType.Token_PI)
+            {
+              //  return (actual + 1, new Atomic(Math.PI));
+            }
             if (tokens[actual].Type == Token.TokenType.Token_Sen)
             {
                 var result_W = W(tokens, actual + 1, last);
@@ -277,11 +282,11 @@ namespace Hulk
             }
             if (tokens[actual].Type == Token.TokenType.Identifier)
             {
-                return  (actual+1,new iDExpresions(tokens[actual]));
+                return (actual + 1, new iDExpresions(tokens[actual]));
             }
-            if(tokens[actual].Type == Token.TokenType.Close_Paren)
+            if (tokens[actual].Type == Token.TokenType.Close_Paren)
             {
-                
+                return(actual,last);
             }
             throw new Exception();
         }
