@@ -4,8 +4,10 @@ namespace Hulk
     {
         static void Main(string[] args)
         {
-           //string line  = "let x=5 y=3 in x+y;";
-            string line  = "if(2==3) 1 else 0;";
+            //me falta cerrar un parentesis
+           string line  = "let x=10 , y=5 in x+y;";
+           //string line  = "let x=10 in let y=5 in x+y;";
+          // string line  = "sin();";
             var exp = Parser.L(LexicalAnalyzer.Tokenize(line),0);
             System.Console.WriteLine(exp.Item2.Evaluate());
         }

@@ -16,6 +16,7 @@ namespace Hulk
         public override double Evaluate()
         {
              //id.Evaluate();
+             if(token.Type==Token.TokenType.Token_PI) return Math.PI;
             return double.Parse(token.Value);
         }
     }

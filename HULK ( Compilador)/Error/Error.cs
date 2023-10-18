@@ -1,42 +1,26 @@
 namespace Hulk
 {
+public class Error
+{
+    public ErrorCode Code { get; }
 
-    public struct Code_Location
+    public string Argument { get; }
+
+    public CodeLocation Location { get; }
+
+     public Error(CodeLocation location, ErrorCode code, string argument)
     {
-        public int line { get; set; }
-        public int column { get; set; }
-        public string codification { get; set; }
+        this.Code = code;
+        this.Argument = argument;
+        Location = location;
     }
-    public class Lexical_Error : Exception
-    {
-        public string message { get; set; }
-        public Lexical_Error(string message) : base(message)
-        {
-            this.message = message;
-        }
-    }
-    public class EndLine_Error : Exception
-    {
-        public EndLine_Error(string message) : base(message)
-        {
-            this.message = message;
-        }
-        public string message { get; set; }
-    }
-    public class Syntax_Error : Exception
-    {
-        public string message { get; set; }
-        public Syntax_Error(string message) : base(message)
-        {
-            this.message = message;
-        }
-    }
-    public class Semantic_Error : Exception
-    {
-        public string message { get; set; }
-        public Semantic_Error(string message) : base(message)
-        {
-            this.message = message;
-        }
-    }
+}
+
+public enum ErrorCode
+{
+    LexicalError,
+    SyntacticError,
+    SemanticError,
+    Unknown,
+}
 }

@@ -76,8 +76,18 @@ namespace Hulk
                 }
                 throw new Exception();
             }
-            //if (tokens[actual].Type == Token.TokenType.Token_Function)
+            /*
+            if (tokens[actual].Type == Token.TokenType.Token_Function)
+            {
+                if (tokens[actual + 1].Type == Token.TokenType.Identifier)
+                {
+                    if (tokens[actual + 2].Type == Token.TokenType.Token_LINQ)
+                    {
 
+                    }
+                }
+            }
+*/
             return A(tokens, actual, last);
         }
         public static (int, Expressions) A(List<Token> tokens, int actual, Expressions last)

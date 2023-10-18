@@ -16,8 +16,12 @@ namespace Hulk
             this.left = left;
             this.right = right;
             this.operators = operators;
-
         }
+/*
+        public override bool CheckSemantic()
+        {
+            
+        }*/
 
         public override double Evaluate()
         {
