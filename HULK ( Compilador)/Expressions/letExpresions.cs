@@ -10,6 +10,11 @@ namespace Hulk
            this.in_part=in_part;
         }
 
+        public override bool CheckSemantic()
+        {
+            throw new NotImplementedException();
+        }
+
         public override double Evaluate()
         {
             let_part.Evaluate();

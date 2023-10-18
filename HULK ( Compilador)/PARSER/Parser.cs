@@ -17,7 +17,7 @@ namespace Hulk
             {
                 if (tokens[actual + 1].Type == Token.TokenType.Open_Paren)
                 {
-                    var result = M(tokens, actual + 1, last);
+                    var result = M(tokens, actual + 2, last);
                     if (tokens[result.Item1].Type == Token.TokenType.Close_Paren)
                     {
                         return (result.Item1 + 1, result.Item2);
@@ -184,13 +184,13 @@ namespace Hulk
             if (tokens[actual].Type == Token.TokenType.Token_Sum)
             {
                 var result_W = W(tokens, actual + 1, last);
-                Expressions sumexpresions = new AritmeticBinary(last, result_W.Item2, AritmeticBinary.Operators.add);
+                Expressions sumexpresions = new ArithmeticBinary(last, result_W.Item2, ArithmeticBinary.Operators.add);
                 return (result_W.Item1, sumexpresions);
             }
             if (tokens[actual].Type == Token.TokenType.Token_Dif)
             {
                 var result_W = W(tokens, actual + 1, last);
-                Expressions difexpresions = new AritmeticBinary(last, result_W.Item2, AritmeticBinary.Operators.dif);
+                Expressions difexpresions = new ArithmeticBinary(last, result_W.Item2, ArithmeticBinary.Operators.dif);
                 return (result_W.Item1, difexpresions);
             }
             return (actual, last);
@@ -206,25 +206,25 @@ namespace Hulk
             if (tokens[actual].Type == Token.TokenType.Token_Multi)
             {
                 var result_F = F(tokens, actual + 1, last);
-                Expressions multexpresions = new AritmeticBinary(last, result_F.Item2, AritmeticBinary.Operators.mult);
+                Expressions multexpresions = new ArithmeticBinary(last, result_F.Item2, ArithmeticBinary.Operators.multi);
                 return (result_F.Item1, multexpresions);
             }
             if (tokens[actual].Type == Token.TokenType.Token_Div)
             {
                 var result_F = F(tokens, actual + 1, last);
-                Expressions divexpresions = new AritmeticBinary(last, result_F.Item2, AritmeticBinary.Operators.div);
+                Expressions divexpresions = new ArithmeticBinary(last, result_F.Item2, ArithmeticBinary.Operators.div);
                 return (result_F.Item1, divexpresions);
             }
             if (tokens[actual].Type == Token.TokenType.Token_Pow)
             {
                 var result_F = F(tokens, actual + 1, last);
-                Expressions powexpresions = new AritmeticBinary(last, result_F.Item2, AritmeticBinary.Operators.Pow);
+                Expressions powexpresions = new ArithmeticBinary(last, result_F.Item2, ArithmeticBinary.Operators.Pow);
                 return (result_F.Item1, powexpresions);
             }
             if (tokens[actual].Type == Token.TokenType.Token_Mod)
             {
                 var result_F = F(tokens, actual + 1, last);
-                Expressions porcentexpresions = new AritmeticBinary(last, result_F.Item2, AritmeticBinary.Operators.Mod);
+                Expressions porcentexpresions = new ArithmeticBinary(last, result_F.Item2, ArithmeticBinary.Operators.Mod);
                 return (result_F.Item1, porcentexpresions);
             }
             return (actual, last);
@@ -249,7 +249,7 @@ namespace Hulk
             }
             if (tokens[actual].Type == Token.TokenType.Token_PI)
             {
-              //  return (actual + 1, new Atomic(Math.PI));
+                return (actual + 1, new Atomic(tokens[actual]));
             }
             if (tokens[actual].Type == Token.TokenType.Token_Sen)
             {

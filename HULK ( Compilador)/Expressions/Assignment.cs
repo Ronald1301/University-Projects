@@ -9,7 +9,12 @@ namespace Hulk
             this.token = token;
             this.argument = argument;
         }
-        
+
+        public override bool CheckSemantic()
+        {
+            throw new NotImplementedException();
+        }
+
         public override double Evaluate()
         {
             Token.Global.Add(token,argument);

@@ -1,21 +1,26 @@
 namespace Hulk
 {
-    public class AritmeticBinary : Expressions
+    public class ArithmeticBinary : Expressions
     {
         public enum Operators
         {
-            add, mult, dif, div, Pow, Mod,
+            add, multi, dif, div, Pow, Mod,
         }
         public Expressions left;
         public Expressions right;
         Operators operators;
 
-        public AritmeticBinary(Expressions left, Expressions right, Operators operators)
+        public ArithmeticBinary(Expressions left, Expressions right, Operators operators)
         {
             this.left = left;
             this.right = right;
             this.operators = operators;
 
+        }
+
+        public override bool CheckSemantic()
+        {
+            throw new NotImplementedException();
         }
 
         public override double Evaluate()
@@ -25,7 +30,7 @@ namespace Hulk
                 case Operators.add:
                     return left.Evaluate() + right.Evaluate();
 
-                case Operators.mult:
+                case Operators.multi:
                     return left.Evaluate() * right.Evaluate();
 
                 case Operators.dif:
@@ -41,5 +46,6 @@ namespace Hulk
                     return Math.Pow(left.Evaluate(), right.Evaluate());
             }
         }
+
     }
 }

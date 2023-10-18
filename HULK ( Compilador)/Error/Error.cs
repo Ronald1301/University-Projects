@@ -6,13 +6,13 @@ public class Error
 
     public string Argument { get; }
 
-    public CodeLocation Location { get; }
+    //public CodeLocation Location { get; }
 
-     public Error(CodeLocation location, ErrorCode code, string argument)
+     public Error(/*CodeLocation location,*/ ErrorCode code, string argument)
     {
         this.Code = code;
         this.Argument = argument;
-        Location = location;
+      //  Location = location;
     }
 }
 

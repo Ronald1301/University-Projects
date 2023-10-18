@@ -17,11 +17,11 @@ namespace Hulk
             this.right = right;
             this.operators = operators;
         }
-/*
+
         public override bool CheckSemantic()
         {
-            
-        }*/
+            throw new Exception();
+        }
 
         public override double Evaluate()
         {

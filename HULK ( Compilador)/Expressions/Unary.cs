@@ -15,6 +15,12 @@ namespace Hulk
             this.operators = operators;
 
         }
+
+        public override bool CheckSemantic()
+        {
+            throw new NotImplementedException();
+        }
+        
         public override double Evaluate()
         {
             switch (this.operators)

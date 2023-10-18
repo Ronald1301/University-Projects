@@ -8,6 +8,11 @@ namespace Hulk
             this.token = token;
         }
 
+        public override bool CheckSemantic()
+        {
+            throw new NotImplementedException();
+        }
+
         public override double Evaluate()
         {
             foreach (var item in Token.Global.Keys)

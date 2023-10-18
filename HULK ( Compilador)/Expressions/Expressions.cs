@@ -4,7 +4,7 @@ namespace Hulk
     {
         public abstract double Evaluate();
 
-       // public abstract bool CheckSemantic();
+        public abstract bool CheckSemantic();
 
     }
 }

@@ -118,7 +118,7 @@ namespace Hulk
             {"cot", new Token(TokenType.Token_Cot,"cot")},
             {"^",new Token(TokenType.Token_Pow,"^")},
             {"sqrt", new Token(TokenType.Token_Sqrt,"sqrt")},
-            {"PI", new Token(TokenType.Token_PI, "PI")},
+            {"pi", new Token(TokenType.Token_PI, "PI")},
             
             //Otros
             {"=>", new Token(TokenType.Token_LINQ, "=>")},

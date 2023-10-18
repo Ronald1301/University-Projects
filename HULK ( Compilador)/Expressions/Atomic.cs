@@ -13,6 +13,11 @@ namespace Hulk
             this.id= id;
         }
 
+        public override bool CheckSemantic()
+        {
+            throw new NotImplementedException();
+        }
+
         public override double Evaluate()
         {
              //id.Evaluate();

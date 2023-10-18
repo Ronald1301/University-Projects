@@ -13,6 +13,11 @@ namespace Hulk
             this.alternative=alternative; 
         }
 
+        public override bool CheckSemantic()
+        {
+            throw new NotImplementedException();
+        }
+
         public override double Evaluate()
         {
             if(condition.Evaluate()==1)return body.Evaluate();

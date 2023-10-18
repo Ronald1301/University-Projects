@@ -104,7 +104,7 @@ namespace Hulk
             if (char.IsLetter(line[start]))
             {
                 //errors.Add(new CompilingError(stream.Location, ErrorCode.Invalid, "Number format"));
-                throw new Lexical_Error("Invalid Token");
+              ///  throw new Lexical_Error("Invalid Token");
             }
 
             // ciclo para obtener el numero completo,ya que el numero puede estar compuesto por mas de un caracter 

@@ -4,12 +4,14 @@ namespace Hulk
     {
         static void Main(string[] args)
         {
-            //me falta cerrar un parentesis
-           string line  = "let x=10 , y=5 in x+y;";
-           //string line  = "let x=10 in let y=5 in x+y;";
-          // string line  = "sin();";
-            var exp = Parser.L(LexicalAnalyzer.Tokenize(line),0);
-            System.Console.WriteLine(exp.Item2.Evaluate());
+            // System.Console.WriteLine("Escriba una linea de código a compilar");
+            // string line = Console.ReadLine()!;
+
+            //string line  = "let x=10 , y=5 in x+y;";
+            ///string line = "Print(Hello World)";
+            string line ="";
+          var exp = Parser.L(LexicalAnalyzer.Tokenize(line.ToLower()), 0);
+            Console.WriteLine(exp.Item2.Evaluate());
         }
     }
 }
