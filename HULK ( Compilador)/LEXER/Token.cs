@@ -71,11 +71,11 @@ namespace Hulk
             {"else", new Token(TokenType.Token_Else, "else")},
             {"in", new Token(TokenType.Token_In, "in")},
             {"then", new Token(TokenType.Token_Then, "then")},
-            {"while", new Token(TokenType.Token_While, "while")},
+            //{"while", new Token(TokenType.Token_While, "while")},
             {"print", new Token(TokenType.Print, "print")},
             {"function", new Token(TokenType.Token_Function, "function")},
 
-            //Operator
+            //Operadores aritméticos
             {"+", new Token(TokenType.Token_Sum, "+")},
             {"-", new Token(TokenType.Token_Dif, "-")},
             {"*", new Token(TokenType.Token_Multi, "*")},
@@ -83,6 +83,7 @@ namespace Hulk
             {"=", new Token(TokenType.Token_Equal, "=")},
             {"%", new Token(TokenType.Token_Mod, "%")},
 
+            //Operadores de comparación
             {"<", new Token(TokenType.Token_Less,"<")},
             {">", new Token(TokenType.Token_More,">")},
             {"<=", new Token(TokenType.Token_LessOrEqual,"<=")},
@@ -127,6 +128,6 @@ namespace Hulk
 
         // Diccionario donde asocio algunos tipos de token con las expresiones que conforman
         public static Dictionary<Token, Expressions> Global = new Dictionary<Token, Expressions>();
-
+        public static string error = "";
     }
 }

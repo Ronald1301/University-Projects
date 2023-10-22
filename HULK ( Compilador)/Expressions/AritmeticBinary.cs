@@ -20,7 +20,16 @@ namespace Hulk
 
         public override bool CheckSemantic()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            if (left.CheckSemantic())
+            {
+                if (right.CheckSemantic())
+                {
+                    return true;
+                }
+                else return false;
+            }
+            return false;
         }
 
         public override double Evaluate()

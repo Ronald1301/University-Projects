@@ -1,26 +1,7 @@
 namespace Hulk
 {
-public class Error
-{
-    public ErrorCode Code { get; }
-
-    public string Argument { get; }
-
-    //public CodeLocation Location { get; }
-
-     public Error(/*CodeLocation location,*/ ErrorCode code, string argument)
+    public abstract class Error
     {
-        this.Code = code;
-        this.Argument = argument;
-      //  Location = location;
+        public abstract string Text();
     }
-}
-
-public enum ErrorCode
-{
-    LexicalError,
-    SyntacticError,
-    SemanticError,
-    Unknown,
-}
 }

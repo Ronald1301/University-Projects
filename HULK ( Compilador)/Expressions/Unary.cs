@@ -26,17 +26,17 @@ namespace Hulk
             switch (this.operators)
             {
                 case Operators.Log:
-                    return argument.Evaluate();
+                    return Math.Log10(argument.Evaluate());
                 case Operators.Sen:
-                    return argument.Evaluate();
+                    return Math.Sin(argument.Evaluate());
                 case Operators.Cos:
-                    return argument.Evaluate();
+                    return Math.Cos(argument.Evaluate());
                 case Operators.Tan:
-                    return argument.Evaluate();
+                    return Math.Tan(argument.Evaluate());
                 case Operators.Cot:
-                    return argument.Evaluate();
+                    return 1/Math.Tan(argument.Evaluate());
                 case Operators.Sqrt:
-                    return argument.Evaluate();
+                    return Math.Sqrt(argument.Evaluate());
                 default:
                     return argument.Evaluate();
             }

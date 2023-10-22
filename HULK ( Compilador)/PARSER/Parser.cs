@@ -9,7 +9,9 @@ namespace Hulk
         {
             var result = M(tokens, actual);
             if (result.Item1 == tokens.Count - 1 && tokens[result.Item1].Type == Token.TokenType.EndLine) return result;
-            throw new Exception();
+            Error error = new TypeError(ErrorCode.LexicalError, " Where is ; ?");
+            App.Error(error.Text());
+            return (0, null)!;
         }
         public static (int, Expressions) M(List<Token> tokens, int actual, Expressions last = null!)
         {
@@ -22,29 +24,34 @@ namespace Hulk
                     {
                         return (result.Item1 + 1, result.Item2);
                     }
-                    throw new Exception();
+                    Error error_paren = new TypeError(ErrorCode.SyntacticError, " Where is ) ?");
+                    App.Error(error_paren.Text());
                 }
-                throw new Exception();
+                Error error = new TypeError(ErrorCode.SyntacticError, " Where is ( ?");
+                App.Error(error.Text());
             }
             if (tokens[actual].Type == Token.TokenType.Token_If)
             {
                 if (tokens[actual + 1].Type == Token.TokenType.Open_Paren)
                 {
                     var if_part = M(tokens, actual + 2, last);
-                  //  var body = M(tokens, if_part.Item1, last);
+                    //  var body = M(tokens, if_part.Item1, last);
                     if (tokens[if_part.Item1].Type == Token.TokenType.Close_Paren)
                     {
                         var body = M(tokens, if_part.Item1 + 1);
                         if (tokens[body.Item1].Type == Token.TokenType.Token_Else)
                         {
-                            var else_part = M(tokens, body.Item1+1);
+                            var else_part = M(tokens, body.Item1 + 1);
                             return (else_part.Item1, new ConditionalExpresions(if_part.Item2, body.Item2, else_part.Item2));
                         }
-                        throw new Exception();
+                        Error error = new TypeError(ErrorCode.SyntacticError, " The Conditional needs a else part");
+                        App.Error(error.Text());
                     }
-                    throw new Exception();
+                    Error error_close_paren = new TypeError(ErrorCode.SyntacticError, " Where is ) ?");
+                    App.Error(error_close_paren.Text());
                 }
-                throw new Exception();
+                Error error_open_paren = new TypeError(ErrorCode.SyntacticError, " Where is ( ?");
+                App.Error(error_open_paren.Text());
             }
             if (tokens[actual].Type == Token.TokenType.Token_Let)
             {
@@ -69,12 +76,14 @@ namespace Hulk
                             Expressions second = new LetExpresions(id, result_in.Item2);
                             return (result_in.Item1, second);
                         }
-                        //  Expressions let_in= new LetExpresions(id,second);
-                        throw new Exception();
+                        Error error_in_comma = new TypeError(ErrorCode.SyntacticError, " The part needs a in or comma");
+                        App.Error(error_in_comma.Text());
                     }
-                    throw new Exception();
+                    Error error_equal = new TypeError(ErrorCode.SyntacticError, " Where is = ?");
+                    App.Error(error_equal.Text());
                 }
-                throw new Exception();
+                Error error = new TypeError(ErrorCode.SyntacticError, " Where is identifier ?");
+                App.Error(error.Text());
             }
             /*
             if (tokens[actual].Type == Token.TokenType.Token_Function)
@@ -111,13 +120,13 @@ namespace Hulk
             if (tokens[actual].Type == Token.TokenType.Token_And)
             {
                 var result_A = A(tokens, actual + 1, last);
-                Expressions andexpresions = new BoolExpresions(last, result_A.Item2, BoolExpresions.Operators.And);
+                Expressions andexpresions = new BoolExpresions(last, result_A.Item2, BoolExpresions.OperatorsLogic.And);
                 return (result_A.Item1, andexpresions);
             }
             if (tokens[actual].Type == Token.TokenType.Token_Or)
             {
                 var result_A = A(tokens, actual + 1, last);
-                Expressions orexpresions = new BoolExpresions(last, result_A.Item2, BoolExpresions.Operators.Or);
+                Expressions orexpresions = new BoolExpresions(last, result_A.Item2, BoolExpresions.OperatorsLogic.Or);
                 return (result_A.Item1, orexpresions);
             }
             return (actual, last);
@@ -133,42 +142,42 @@ namespace Hulk
             if (tokens[actual].Type == Token.TokenType.Token_DoubleEqual)
             {
                 var result_B = B(tokens, actual + 1, last);
-                Expressions doubleequalexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.Operators.DoubleEqual);
+                Expressions doubleequalexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.OperatorsComparison.DoubleEqual);
                 return (result_B.Item1, doubleequalexpresions);
             }
 
             if (tokens[actual].Type == Token.TokenType.Token_LessOrEqual)
             {
                 var result_B = B(tokens, actual + 1, last);
-                Expressions LessOrEquallexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.Operators.LessOrEqual);
+                Expressions LessOrEquallexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.OperatorsComparison.LessOrEqual);
                 return (result_B.Item1, LessOrEquallexpresions);
             }
 
             if (tokens[actual].Type == Token.TokenType.Token_MoreOrEqual)
             {
                 var result_B = B(tokens, actual + 1, last);
-                Expressions MoreOrEqualexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.Operators.MoreOrEqual);
+                Expressions MoreOrEqualexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.OperatorsComparison.MoreOrEqual);
                 return (result_B.Item1, MoreOrEqualexpresions);
             }
 
             if (tokens[actual].Type == Token.TokenType.Token_NoEqual)
             {
                 var result_B = B(tokens, actual + 1, last);
-                Expressions NoEqualexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.Operators.NoEqual);
+                Expressions NoEqualexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.OperatorsComparison.NoEqual);
                 return (result_B.Item1, NoEqualexpresions);
             }
 
             if (tokens[actual].Type == Token.TokenType.Token_Less)
             {
                 var result_B = B(tokens, actual + 1, last);
-                Expressions Lessexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.Operators.Less);
+                Expressions Lessexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.OperatorsComparison.Less);
                 return (result_B.Item1, Lessexpresions);
             }
 
             if (tokens[actual].Type == Token.TokenType.Token_More)
             {
                 var result_B = B(tokens, actual + 1, last);
-                Expressions Moreexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.Operators.More);
+                Expressions Moreexpresions = new BoolExpresions(last, result_B.Item2, BoolExpresions.OperatorsComparison.More);
                 return (result_B.Item1, Moreexpresions);
             }
             return (actual, last);
@@ -296,7 +305,7 @@ namespace Hulk
             }
             if (tokens[actual].Type == Token.TokenType.Close_Paren)
             {
-                return(actual,last);
+                return (actual, last);
             }
             throw new Exception();
         }

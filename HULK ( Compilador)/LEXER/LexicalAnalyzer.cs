@@ -96,20 +96,27 @@ namespace Hulk
             }
         }
 
-        //método para analizar el numero dado en la cadena
+        //método para analizar el número dado en la cadena
         static (int, string) GetNumber(int start, string line)
         {
             string number = "";
-            // si el caracter es una letra entonces el token es invalido
-            if (char.IsLetter(line[start]))
-            {
-                //errors.Add(new CompilingError(stream.Location, ErrorCode.Invalid, "Number format"));
-              ///  throw new Lexical_Error("Invalid Token");
-            }
 
             // ciclo para obtener el numero completo,ya que el numero puede estar compuesto por mas de un caracter 
-            while (Char.IsDigit(line[start]) || line[start] == 'e' || line[start] == '.')
+            while (Char.IsLetterOrDigit(line[start]) || line[start] == 'e' || line[start] == '.')
             {
+                // si el caracter es una letra entonces el token es inválido
+                if (char.IsLetter(line[start]))
+                {
+                    Error error = new TypeError(ErrorCode.LexicalError, number + line[start]);
+                    App.Error(error.Text());
+                    /*
+                     Utils.Error = "! LEXICAL ERROR: " + result + line[i] + " is a Invalid Token";
+                     Application.ThrowError(Utils.Error);
+
+                    errors.Add(new CompilingError(stream.Location, ErrorCode.Invalid, result + line[i]));
+                    throw new Lexical_Error("Invalid Token");
+                    */
+                }
                 number += line[start++];
             }
             return (start, number);
@@ -119,11 +126,20 @@ namespace Hulk
         static (int, string) GetString(int start, string line)
         {
             string result = "";
-            while (line[start] != '\"')
+            try
             {
-                result += line[start];
-                start += 1;
+                while (line[start] != '\"')
+                {
+                    result += line[start];
+                    start += 1;
+                }
             }
+            catch (System.IndexOutOfRangeException)
+            {
+                Error error = new TypeError(ErrorCode.LexicalError, result + line[start]);
+                App.Error(error.Text());
+            }
+
             return (start, result);
         }
 
@@ -134,7 +150,7 @@ namespace Hulk
             //si con el caracter siguiente coincide con un operador,entonces me da esos caraccteres que forman un token
             if (start < line.Length - 1)
             {
-                if (Token.AllTokens.ContainsKey(opera + line[start + 1])) return (start+1, opera += line[start + 1]);
+                if (Token.AllTokens.ContainsKey(opera + line[start + 1])) return (start + 1, opera += line[start + 1]);
             }
             //si no se cumple lo anterior devuelvo el mismo caracter que corresponde a un token
             return (start, opera);

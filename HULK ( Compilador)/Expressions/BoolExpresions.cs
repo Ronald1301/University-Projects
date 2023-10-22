@@ -2,21 +2,34 @@ namespace Hulk
 {
     public class BoolExpresions : Expressions
     {
-        public enum Operators
+        public enum OperatorsComparison
         {
-            Less, More, LessOrEqual, MoreOrEqual, DoubleEqual, NoEqual, And, Or,
+            Less, More, LessOrEqual, MoreOrEqual, DoubleEqual, NoEqual,
 
         }
+        public enum OperatorsLogic
+        {
+            And, Or,
+        }
+
         public Expressions left;
         public Expressions right;
-        Operators operators;
+        OperatorsComparison comparison;
+        OperatorsLogic logic;
 
-        public BoolExpresions(Expressions left, Expressions right, Operators operators)
+        public BoolExpresions(Expressions left, Expressions right, OperatorsComparison comparison)
         {
             this.left = left;
             this.right = right;
-            this.operators = operators;
+            this.comparison = comparison;
         }
+        public BoolExpresions(Expressions left, Expressions right, OperatorsLogic logic)
+        {
+            this.left = left;
+            this.right = right;
+            this.logic = logic;
+        }
+
 
         public override bool CheckSemantic()
         {
@@ -27,26 +40,29 @@ namespace Hulk
         {
             double a = left.Evaluate();
             double b = right.Evaluate();
-            switch (this.operators)
+            switch (this.comparison)
             {
-                case Operators.DoubleEqual:
+                case OperatorsComparison.DoubleEqual:
                     return a == b ? 1 : 0;
-                case Operators.Less:
+                case OperatorsComparison.Less:
                     return a < b ? 1 : 0;
-                case Operators.LessOrEqual:
+                case OperatorsComparison.LessOrEqual:
                     return a <= b ? 1 : 0;
-                case Operators.More:
+                case OperatorsComparison.More:
                     return a > b ? 1 : 0;
-                case Operators.MoreOrEqual:
+                case OperatorsComparison.MoreOrEqual:
                     return a >= b ? 1 : 0;
-                /*  
-                case Operators.And:
-                      return (a == true) && (b == true) ? 1 : 0;
-                  case Operators.Or:
-                      return (a == true) || (b == true) ? 1 : 0;
-                */
-                default:
+                case OperatorsComparison.NoEqual:
                     return a != b ? 1 : 0;
+                default:
+                    switch (this.logic)
+                    {
+                        case OperatorsLogic.And:
+                            return (Convert.ToBoolean(a) == true) && (Convert.ToBoolean(b) == true) ? 1 : 0;
+                        default:
+                            return (Convert.ToBoolean(a) == true) || (Convert.ToBoolean(b) == true) ? 1 : 0;
+                    }
+
             }
         }
     }
