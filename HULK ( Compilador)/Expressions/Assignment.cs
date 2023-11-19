@@ -10,12 +10,22 @@ namespace Hulk
             this.argument = argument;
         }
 
-        public override bool CheckSemantic()
+        public override Token.DataType CheckSemantic()
         {
-            throw new NotImplementedException();
+            /*
+            foreach (var item in where!.Declared_Type.Keys)
+            {
+                if (item.Value == token.Value)
+                {
+                    where.Declared_Type[item] = argument.CheckSemantic();
+                    return where.Declared_Type[item];
+                }
+            }
+            */
+            throw new();
         }
 
-        public override double Evaluate()
+        public override object Evaluate()
         {
             Token.Global.Add(token,argument);
             return 0;

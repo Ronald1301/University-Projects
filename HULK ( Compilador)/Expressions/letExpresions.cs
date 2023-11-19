@@ -10,12 +10,13 @@ namespace Hulk
            this.in_part=in_part;
         }
 
-        public override bool CheckSemantic()
+        public override Token.DataType CheckSemantic()
         {
-            throw new NotImplementedException();
+             let_part.CheckSemantic();
+            return in_part.CheckSemantic();
         }
 
-        public override double Evaluate()
+        public override object Evaluate()
         {
             let_part.Evaluate();
             return in_part.Evaluate();

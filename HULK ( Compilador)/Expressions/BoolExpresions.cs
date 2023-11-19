@@ -31,36 +31,42 @@ namespace Hulk
         }
 
 
-        public override bool CheckSemantic()
+        public override Token.DataType CheckSemantic()
         {
-            throw new Exception();
+            if (left.CheckSemantic() == Token.DataType.boolean && right.CheckSemantic() == Token.DataType.boolean)
+            {
+                return Token.DataType.boolean;
+            }
+            Error error = new TypeError(ErrorCode.SemanticError, "The expression is not of type boolean");
+            App.Error(error.Text());
+            return Token.DataType.error;
         }
 
-        public override double Evaluate()
+        public override object Evaluate()
         {
-            double a = left.Evaluate();
-            double b = right.Evaluate();
+            double a = Convert.ToDouble(left.Evaluate());
+            double b = Convert.ToDouble(right.Evaluate());
             switch (this.comparison)
             {
                 case OperatorsComparison.DoubleEqual:
-                    return a == b ? 1 : 0;
+                    return a == b;
                 case OperatorsComparison.Less:
-                    return a < b ? 1 : 0;
+                    return a < b;
                 case OperatorsComparison.LessOrEqual:
-                    return a <= b ? 1 : 0;
+                    return a <= b;
                 case OperatorsComparison.More:
-                    return a > b ? 1 : 0;
+                    return a > b;
                 case OperatorsComparison.MoreOrEqual:
-                    return a >= b ? 1 : 0;
+                    return a >= b;
                 case OperatorsComparison.NoEqual:
-                    return a != b ? 1 : 0;
+                    return a != b;
                 default:
                     switch (this.logic)
                     {
                         case OperatorsLogic.And:
-                            return (Convert.ToBoolean(a) == true) && (Convert.ToBoolean(b) == true) ? 1 : 0;
+                            return (Convert.ToBoolean(a) == true) && (Convert.ToBoolean(b) == true) ? true : false;
                         default:
-                            return (Convert.ToBoolean(a) == true) || (Convert.ToBoolean(b) == true) ? 1 : 0;
+                            return (Convert.ToBoolean(a) == true) || (Convert.ToBoolean(b) == true) ? true : false;
                     }
 
             }

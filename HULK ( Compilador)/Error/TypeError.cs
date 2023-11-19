@@ -6,22 +6,10 @@ namespace Hulk
 
         public string argument { get; }
 
-        /*
-                public CodeLocation Location { get; }
-
-                public struct CodeLocation
-                {
-                    public string File;
-                    public int Line;
-                    public int Column;
-                }
-        */
-
-        public TypeError(/*CodeLocation location,*/ ErrorCode code, string argument)
+        public TypeError(ErrorCode code, string argument)
         {
             this.Code = code;
             this.argument = argument;
-            //  Location = location;
         }
 
         public override string Text()

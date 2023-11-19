@@ -2,9 +2,9 @@ namespace Hulk
 {
     public abstract class Expressions
     {
-        public abstract double Evaluate();
+        public abstract object Evaluate();
 
-        public abstract bool CheckSemantic();
+        public abstract Token.DataType CheckSemantic();
 
     }
 }

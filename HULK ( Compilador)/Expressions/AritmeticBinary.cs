@@ -4,7 +4,7 @@ namespace Hulk
     {
         public enum Operators
         {
-            add, multi, dif, div, Pow, Mod,
+            add, multi, dif, div, Pow, Mod, Concat,
         }
         public Expressions left;
         public Expressions right;
@@ -15,44 +15,44 @@ namespace Hulk
             this.left = left;
             this.right = right;
             this.operators = operators;
-
         }
 
-        public override bool CheckSemantic()
+        public override Token.DataType CheckSemantic()
         {
-            //throw new NotImplementedException();
-            if (left.CheckSemantic())
+            if (left.CheckSemantic() == Token.DataType.number && right.CheckSemantic() == Token.DataType.number)
             {
-                if (right.CheckSemantic())
-                {
-                    return true;
-                }
-                else return false;
+                return Token.DataType.number;
             }
-            return false;
+            Error error = new TypeError(ErrorCode.SemanticError, "The expression is not of type number");
+            App.Error(error.Text());
+            return Token.DataType.error;
         }
 
-        public override double Evaluate()
+        public override object Evaluate()
         {
             switch (this.operators)
             {
                 case Operators.add:
-                    return left.Evaluate() + right.Evaluate();
+                    return Convert.ToDouble(left.Evaluate()) + Convert.ToDouble(right.Evaluate());
 
                 case Operators.multi:
-                    return left.Evaluate() * right.Evaluate();
+                    return Convert.ToDouble(left.Evaluate()) * Convert.ToDouble(right.Evaluate());
 
                 case Operators.dif:
-                    return left.Evaluate() - right.Evaluate();
+                    return Convert.ToDouble(left.Evaluate()) - Convert.ToDouble(right.Evaluate());
 
                 case Operators.div:
-                    return left.Evaluate() / right.Evaluate();
+                    return Convert.ToDouble(left.Evaluate()) / Convert.ToDouble(right.Evaluate());
 
                 case Operators.Mod:
-                    return left.Evaluate() % right.Evaluate();
+                    return Convert.ToDouble(left.Evaluate()) % Convert.ToDouble(right.Evaluate());
+
+                case Operators.Pow:
+                    return Math.Pow(Convert.ToDouble(left.Evaluate()), Convert.ToDouble(right.Evaluate()));
 
                 default:
-                    return Math.Pow(left.Evaluate(), right.Evaluate());
+                    return left.Evaluate().ToString() + right.Evaluate().ToString();
+
             }
         }
 

@@ -7,9 +7,19 @@ namespace Hulk
     {
         public static (int, Expressions) L(List<Token> tokens, int actual)
         {
+            /*
+            if (tokens.Count == 1)
+            {
+                if (tokens[actual].Type == Token.TokenType.EndLine)
+                {
+                    Error error1 = new TypeError(ErrorCode.LexicalError, " Where is ; ?");
+                    App.Error(error1.Text());
+                    return (0, null)!;
+                }
+            }*/
             var result = M(tokens, actual);
             if (result.Item1 == tokens.Count - 1 && tokens[result.Item1].Type == Token.TokenType.EndLine) return result;
-            Error error = new TypeError(ErrorCode.LexicalError, " Where is ; ?");
+            Error error = new TypeError(ErrorCode.SyntacticError, " Where is ; ?");
             App.Error(error.Text());
             return (0, null)!;
         }
@@ -201,6 +211,12 @@ namespace Hulk
                 var result_W = W(tokens, actual + 1, last);
                 Expressions difexpresions = new ArithmeticBinary(last, result_W.Item2, ArithmeticBinary.Operators.dif);
                 return (result_W.Item1, difexpresions);
+            }
+            if (tokens[actual].Type == Token.TokenType.Token_Concat)
+            {
+                var result_W = W(tokens, actual + 1, last);
+                Expressions concatexpresions = new ArithmeticBinary(last, result_W.Item2, ArithmeticBinary.Operators.Concat);
+                return (result_W.Item1, concatexpresions);
             }
             return (actual, last);
         }

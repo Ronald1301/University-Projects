@@ -2,8 +2,6 @@ namespace Hulk
 {
     public static class App
     {
-        //This class is a  "Visual App" for HULK. Is just a Console Application
-        //but with some colors.
         public static void Presentation()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -11,7 +9,6 @@ namespace Hulk
             System.Console.WriteLine("Write the code to compile");
             SelectKey();
         }
-        //Application is Run
         public static void SelectKey()
         {
             System.Console.Write(">>");
@@ -19,10 +16,9 @@ namespace Hulk
             ConsoleKey key = Console.ReadKey(true).Key;
             if (key == ConsoleKey.Enter)
             {
-                //Tokenize and parse the user input
+                
                var exp = Parser.L(LexicalAnalyzer.Tokenize(line.ToLower()), 0);
-                //Analyze the AST 
-                //My AST is a "Big Expression" with expression
+                
                 Console.WriteLine(exp.Item2.Evaluate());
                 /*
                 exp.Item2.GetScope(Utils.Global);

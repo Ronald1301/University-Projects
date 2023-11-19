@@ -13,14 +13,20 @@ namespace Hulk
             this.alternative=alternative; 
         }
 
-        public override bool CheckSemantic()
+        public override Token.DataType CheckSemantic()
         {
-            throw new NotImplementedException();
+            if (condition.CheckSemantic() == Token.DataType.boolean)
+            {
+                return Token.DataType.boolean;
+            }
+            Error error = new TypeError(ErrorCode.SemanticError, "The expression is not of type boolean");
+            App.Error(error.Text());
+            return Token.DataType.error;
         }
 
-        public override double Evaluate()
+        public override object Evaluate()
         {
-            if(condition.Evaluate()==1)return body.Evaluate();
+            if((bool)condition.Evaluate())return body.Evaluate();
             return alternative.Evaluate();
         }
     }

@@ -2,27 +2,27 @@ using System.Data.Common;
 
 namespace Hulk
 {
-    public class Atomic: Expressions
+    public class Atomic : Expressions
     {
         public Token token;
-        public Expressions id;
+        // public Expressions id;
 
-        public Atomic(Token token,Expressions id=null)
+        public Atomic(Token token/*,Expressions id=null!*/)
         {
             this.token = token;
-            this.id= id;
+            // this.id= id;
         }
 
-        public override bool CheckSemantic()
+        public override Token.DataType CheckSemantic()
         {
             throw new NotImplementedException();
         }
 
-        public override double Evaluate()
+        public override object Evaluate()
         {
-             //id.Evaluate();
-             if(token.Type==Token.TokenType.Token_PI) return Math.PI;
-            return double.Parse(token.Value);
+            //id.Evaluate();
+            if (token.Type == Token.TokenType.Token_PI) return Math.PI;
+            return token.Value;
         }
     }
 }

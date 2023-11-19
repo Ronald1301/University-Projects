@@ -44,7 +44,7 @@ namespace Hulk
                 }
 
                 //si el caracter son comillas,analiza si hay un token de tipo string
-                if (line[i] == '\"')
+                if (line[i] == '\"' || line[i] == '"')
                 {
                     //si la variable auxiliar no es vacia,analiza si es un token y guardalo en la lista
                     if (aux != "") tokens.Add(GetToken(aux));
@@ -109,15 +109,9 @@ namespace Hulk
                 {
                     Error error = new TypeError(ErrorCode.LexicalError, number + line[start]);
                     App.Error(error.Text());
-                    /*
-                     Utils.Error = "! LEXICAL ERROR: " + result + line[i] + " is a Invalid Token";
-                     Application.ThrowError(Utils.Error);
-
-                    errors.Add(new CompilingError(stream.Location, ErrorCode.Invalid, result + line[i]));
-                    throw new Lexical_Error("Invalid Token");
-                    */
                 }
                 number += line[start++];
+                if (start == line.Length) break;
             }
             return (start, number);
         }
@@ -128,11 +122,12 @@ namespace Hulk
             string result = "";
             try
             {
-                while (line[start] != '\"')
+                while (line[start] != '"' || line[start] != '\"')
                 {
                     result += line[start];
                     start += 1;
                 }
+                start++;
             }
             catch (System.IndexOutOfRangeException)
             {
