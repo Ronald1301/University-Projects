@@ -33,9 +33,9 @@ namespace Hulk
 
         public override Token.DataType CheckSemantic()
         {
-            if (left.CheckSemantic() == Token.DataType.boolean && right.CheckSemantic() == Token.DataType.boolean)
+            if (left.CheckSemantic() == Token.DataType.number && right.CheckSemantic() == Token.DataType.number)
             {
-                return Token.DataType.boolean;
+                return Token.DataType.number;
             }
             Error error = new TypeError(ErrorCode.SemanticError, "The expression is not of type boolean");
             App.Error(error.Text());

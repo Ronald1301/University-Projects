@@ -25,7 +25,7 @@ namespace Hulk
             }
             if (argument.CheckSemantic() == Token.DataType.boolean)
             {
-                return Token.DataType.boolean;
+                return Token.DataType.number;
             }
             Error error = new TypeError(ErrorCode.SemanticError, "The expression is not of type number or boolean");
             App.Error(error.Text());

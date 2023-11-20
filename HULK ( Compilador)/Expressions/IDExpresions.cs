@@ -1,3 +1,5 @@
+using System.Data.Common;
+
 namespace Hulk
 {
     public class iDExpresions : Expressions
@@ -10,7 +12,10 @@ namespace Hulk
 
         public override Token.DataType CheckSemantic()
         {
-            throw new NotImplementedException();
+            if (!Convert.ToBoolean(Token.Global.ContainsKey(token))) return Token.DataType.number;
+            Error error = new TypeError(ErrorCode.SemanticError, "The variable is not previously created");
+            App.Error(error.Text());
+            return Token.DataType.error;
         }
 
         public override object Evaluate()
