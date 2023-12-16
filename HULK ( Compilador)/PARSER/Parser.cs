@@ -92,12 +92,6 @@ namespace Hulk
             {
                 if (tokens[actual + 1].Type == Token.TokenType.Identifier)
                 {
-                    if (Additional.Functions_global.ContainsKey(tokens[actual + 1].Value))
-                    {
-                        Error error_func_existe = new TypeError(ErrorCode.SyntacticError, "That function already exists");
-                        App.Error(error_func_existe.Text());
-                    }
-
                     Token nameFunction = tokens[actual + 1];
 
                     if (tokens[actual + 2].Type == Token.TokenType.Open_Paren)
@@ -110,9 +104,14 @@ namespace Hulk
                             Additional.declared_func = true;
                             var result_M = M(tokens, actual + 1);
                             FunctionDeclarations function = new FunctionDeclarations(nameFunction.Value, result_K.Item2, result_M.Item2);
+
+                            if (Additional.Check_Exist_Func(nameFunction.Value, function.Params.Count))
+                            {
+                                Error error_func_existe = new TypeError(ErrorCode.SyntacticError, "That function already exists");
+                                App.Error(error_func_existe.Text());
+                            }
                             Additional.Functions_global.Add(function.Name, function);
                             return (result_M.Item1, function);
-
                         }
                         Error error_linq = new TypeError(ErrorCode.SyntacticError, " Where is => ?");
                         App.Error(error_linq.Text());
@@ -125,36 +124,6 @@ namespace Hulk
                 App.Error(error.Text());
             }
 
-            /*    
-                private SyntaxExpression ParseFunctionCallExpression()
-                {
-                    var name = NextToken()._text ;   // Nombre de la funcion
-                    MatchKind(SyntaxKind.OpenParenthesisToken);                     
-
-                    List<SyntaxExpression> args = new List<SyntaxExpression>() ;
-
-                    while(Current._kind != SyntaxKind.CloseParenthesisToken)
-                    {
-                        args.Add(ParseExpression()) ;
-
-                        if(Current._kind != SyntaxKind.CloseParenthesisToken)
-                        {   
-                            // chequea que a cada argumento le siga una coma excepto el ultimo       
-                            MatchKind(SyntaxKind.CommaSeparatorToken);
-                        }
-
-                        if(ErrorHasOcurred)
-                        {
-                            GetToRecoveryPoint();
-                            return new FunctionCallExpression(null , new List<SyntaxExpression>()) ;                 
-                        }
-                    }
-                    NextToken() ;  // Saltando el ) 
-
-                    return new FunctionCallExpression(name , args);
-                }    
-
-            */
             return A(tokens, actual, last);
         }
 
@@ -419,7 +388,6 @@ namespace Hulk
                     {
                         if (tokens[actual + 1].Type == Token.TokenType.Open_Paren)
                         {
-                            Token func = tokens[actual];
                             var result_U = U(tokens, actual + 2, new());
                             FunCall function_call = new FunCall(Additional.Functions_global[key], result_U.Item2);
                             return (result_U.Item1 + 1, function_call);
