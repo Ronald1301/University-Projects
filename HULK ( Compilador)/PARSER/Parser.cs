@@ -90,35 +90,38 @@ namespace Hulk
             //Declaración de funciones 
             if (tokens[actual].Type == Token.TokenType.Token_Function)
             {
-                if (tokens[actual + 1].Type == Token.TokenType.Identifier)
+                if (tokens[actual + 1].Type == Token.TokenType.Identifier || Additional.Func_Predef(tokens[actual + 1]))
                 {
-                    Token nameFunction = tokens[actual + 1];
-
-                    if (tokens[actual + 2].Type == Token.TokenType.Open_Paren)
+                    if (Additional.Search_LINQ(tokens, actual + 1))
                     {
-                        (int, List<Token>) result_K = K(tokens, actual + 3, new());
-                        actual = result_K.Item1;
+                        Token nameFunction = tokens[actual + 1];
 
-                        if (tokens[actual].Type == Token.TokenType.Token_LINQ)
+                        if (tokens[actual + 2].Type == Token.TokenType.Open_Paren)
                         {
-                            Additional.declared_func = true;
-                            var result_M = M(tokens, actual + 1);
-                            FunctionDeclarations function = new FunctionDeclarations(nameFunction.Value, result_K.Item2, result_M.Item2);
+                            (int, List<Token>) result_K = K(tokens, actual + 3, new());
+                            actual = result_K.Item1;
 
-                            if (Additional.Check_Exist_Func(nameFunction.Value, function.Params.Count))
+                            if (tokens[actual].Type == Token.TokenType.Token_LINQ)
                             {
-                                Error error_func_existe = new TypeError(ErrorCode.SyntacticError, "That function already exists");
-                                App.Error(error_func_existe.Text());
-                            }
-                            Additional.Functions_global.Add(function.Name, function);
-                            return (result_M.Item1, function);
-                        }
-                        Error error_linq = new TypeError(ErrorCode.SyntacticError, " Where is => ?");
-                        App.Error(error_linq.Text());
+                                Additional.declared_func = true;
+                                var result_M = M(tokens, actual + 1);
+                                FunctionDeclarations function = new FunctionDeclarations(nameFunction.Value, result_K.Item2, result_M.Item2);
 
+                                if (Additional.Check_Exist_Func(nameFunction.Value, function.Params.Count))
+                                {
+                                    Error error_func_existe = new TypeError(ErrorCode.SyntacticError, "That function already exists");
+                                    App.Error(error_func_existe.Text());
+                                }
+                                Additional.Functions_global.Add(function.Name, function);
+                                return (result_M.Item1, function);
+                            }
+                            Error error_linq = new TypeError(ErrorCode.SyntacticError, " Where is => ?");
+                            App.Error(error_linq.Text());
+
+                        }
+                        Error error_open_paren = new TypeError(ErrorCode.SyntacticError, " Where is ( ?");
+                        App.Error(error_open_paren.Text());
                     }
-                    Error error_open_paren = new TypeError(ErrorCode.SyntacticError, " Where is ( ?");
-                    App.Error(error_open_paren.Text());
                 }
                 Error error = new TypeError(ErrorCode.SyntacticError, " Where is identifier ?");
                 App.Error(error.Text());
@@ -380,6 +383,16 @@ namespace Hulk
                 Error error_close_paren = new TypeError(ErrorCode.SyntacticError, " Where is ) ?");
                 App.Error(error_close_paren.Text());
             }
+            if (tokens[actual].Type == Token.TokenType.Open_Key)
+            {
+                var result_M = M(tokens, actual + 1, last);
+                if (tokens[result_M.Item1].Type == Token.TokenType.Close_Key)
+                {
+                    return (result_M.Item1 + 1, result_M.Item2);
+                }
+                Error error_close_paren = new TypeError(ErrorCode.SyntacticError, " Where is } ?");
+                App.Error(error_close_paren.Text());
+            }
             if (tokens[actual].Type == Token.TokenType.Identifier)
             {
                 foreach (var key in Additional.Functions_global.Keys)
@@ -388,14 +401,21 @@ namespace Hulk
                     {
                         if (tokens[actual + 1].Type == Token.TokenType.Open_Paren)
                         {
+                            Additional.call_func = true;
                             var result_U = U(tokens, actual + 2, new());
                             FunCall function_call = new FunCall(Additional.Functions_global[key], result_U.Item2);
+                            if (result_U.Item1 + 1 > tokens.Count)
+                            {
+                                Error error = new TypeError(ErrorCode.SyntacticError, " Where is ; ?");
+                                App.Error(error.Text());
+                                return (0, null!);
+                            }
                             return (result_U.Item1 + 1, function_call);
                         }
                         break;
                     }
                 }
-                return (actual + 1, new iDExpresions(tokens[actual]));
+                return (actual + 1, new iDExpresions(tokens[actual], null!));
             }
             if (tokens[actual].Type == Token.TokenType.Close_Paren)
             {

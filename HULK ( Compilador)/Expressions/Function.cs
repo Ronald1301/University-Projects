@@ -16,7 +16,8 @@ namespace Hulk
 
         public override Additional.DataType CheckSemantic()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return Additional.DataType.function;
         }
 
         public override object Evaluate()
@@ -29,11 +30,11 @@ namespace Hulk
     public class FunCall : Expressions
     {
         readonly FunctionDeclarations Function;
-        readonly List<Expressions> Arguments; //Arg for the function
+        readonly List<Expressions> Arguments;
         public FunCall(FunctionDeclarations function, List<Expressions> arguments)
         {
-            this.Arguments = arguments;
             this.Function = function;
+            this.Arguments = arguments;
         }
 
         public override Additional.DataType CheckSemantic()
@@ -53,14 +54,12 @@ namespace Hulk
 
         public override object Evaluate()
         {
-            Dictionary<Token, object> ParamsFunction = new();
             int Count = 0;
             foreach (var item in Arguments)
             {
-                ParamsFunction.Add(Function.Params[Count], item.Evaluate());
+                Additional.Func_Call_Params.Add(Function.Params[Count], item.Evaluate());
                 Count += 1;
             }
-
             return Function.Body.Evaluate();
         }
     }

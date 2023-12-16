@@ -12,24 +12,28 @@ namespace Hulk
 
         public override Additional.DataType CheckSemantic()
         {
-            /*
-            foreach (var item in where!.Declared_Type.Keys)
-            {
-                if (item.Value == token.Value)
-                {
-                    where.Declared_Type[item] = argument.CheckSemantic();
-                    return where.Declared_Type[item];
-                }
-            }
-            */
             return Additional.DataType.ID;
             throw new();
         }
 
         public override object Evaluate()
         {
-            Additional.Global_variables.Add(token,argument);
+            Additional.Global_variables.Add(token, argument);
             return 0;
+
+            /*
+                         foreach (var item in  Additional.Global_variables)
+                        {
+                            if (item.Value == token.Value)
+                            {
+                                var result = argument.Evaluate();
+                                where.Corpus_Values.Add(token, result);
+                                return result;
+                            }
+                        }
+                        throw new();
+                        */
         }
+
     }
 }
