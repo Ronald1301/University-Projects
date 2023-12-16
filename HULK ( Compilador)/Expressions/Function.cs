@@ -1,68 +1,67 @@
 namespace Hulk
 {
-    public class Function : Expressions
+    public class FunctionDeclarations : Expressions
     {
-        public string Name; //Function's name
-        public List<Token> Arg; //Params
+        public string Name; //FunctionDeclarations name
+        public List<Token> Params; //Params
         public Expressions Body; //Body
 
 
-        public Function(string name, List<Token> arg, Expressions body)
+        public FunctionDeclarations(string name, List<Token> param, Expressions body)
         {
             Name = name;
-            Arg = arg;
+            Params = param;
             Body = body;
         }
 
-        public override Token.DataType CheckSemantic()
+        public override Additional.DataType CheckSemantic()
         {
             throw new NotImplementedException();
         }
 
-        public override string Evaluate()
+        public override object Evaluate()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return 0;
         }
     }
 
-
-
-
-
-
-
-    public class FunCallExpression : Expressions
+    public class FunCall : Expressions
     {
-        Function function;
-        List<Expressions> expressions; //Arg for the function
-        public FunCallExpression(Function function, List<Expressions> expressions)
+        readonly FunctionDeclarations Function;
+        readonly List<Expressions> Arguments; //Arg for the function
+        public FunCall(FunctionDeclarations function, List<Expressions> arguments)
         {
-            this.expressions = expressions;
-            this.function = function;
+            this.Arguments = arguments;
+            this.Function = function;
         }
 
-        public override Token.DataType CheckSemantic()
+        public override Additional.DataType CheckSemantic()
         {
-            throw new NotImplementedException();
-        }
-
-        public override string Evaluate()
-        {
-            throw new NotImplementedException();
-            /*
-            Dictionary<Token, string> temp = function.scope_function!.Corpus_Values;
-            Dictionary<Token, string> ParamsFunction = new();
-            int index = 0;
-            foreach (var item in expressions)
+            if (Function.Params.Count == Arguments.Count)
             {
-                ParamsFunction.Add(function.Arg[index], item.Evaluate());
-                index += 1;
+                foreach (var item in Arguments)
+                {
+                    item.CheckSemantic();
+                }
+                return Additional.DataType.function;
             }
-            function.scope_function.Corpus_Values = ParamsFunction;
-            string final = function.Body.Evaluate();
-            function.scope_function.Corpus_Values = temp;
-            return final;
-*/
+            Error error = new TypeError(ErrorCode.SemanticError, " Invalid arguments count");
+            App.Error(error.Text());
+            return Additional.DataType.error;
+        }
+
+        public override object Evaluate()
+        {
+            Dictionary<Token, object> ParamsFunction = new();
+            int Count = 0;
+            foreach (var item in Arguments)
+            {
+                ParamsFunction.Add(Function.Params[Count], item.Evaluate());
+                Count += 1;
+            }
+
+            return Function.Body.Evaluate();
         }
     }
 

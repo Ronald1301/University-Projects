@@ -7,16 +7,6 @@ namespace Hulk
     {
         public static (int, Expressions) L(List<Token> tokens, int actual)
         {
-            /*
-            if (tokens.Count == 1)
-            {
-                if (tokens[actual].Type == Token.TokenType.EndLine)
-                {
-                    Error error1 = new TypeError(ErrorCode.LexicalError, " Where is ; ?");
-                    App.Error(error1.Text());
-                    return (0, null)!;
-                }
-            }*/
             var result = M(tokens, actual);
             if (result.Item1 == tokens.Count - 1 && tokens[result.Item1].Type == Token.TokenType.EndLine) return result;
             Error error = new TypeError(ErrorCode.SyntacticError, " Where is ; ?");
@@ -96,8 +86,136 @@ namespace Hulk
                 App.Error(error.Text());
             }
 
+            //Declaración de funciones 
+            if (tokens[actual].Type == Token.TokenType.Token_Function)
+            {
+                if (tokens[actual + 1].Type == Token.TokenType.Identifier)
+                {
+                    if (Additional.Functions_global.ContainsKey(tokens[actual + 1].Value))
+                    {
+                        Error error_func_existe = new TypeError(ErrorCode.SyntacticError, "That function already exists");
+                    App.Error(error_func_existe.Text());
+                    }
+
+                    Token nameFunction = tokens[actual + 1];
+
+                    if (tokens[actual + 2].Type == Token.TokenType.Open_Paren)
+                    {
+                        (int, List<Token>) result_K = K(tokens, actual + 3, new());
+                        actual = result_K.Item1;
+
+                        if (tokens[actual].Type == Token.TokenType.Token_LINQ)
+                        {
+                            var result_M = M(tokens, actual + 1);
+                            FunctionDeclarations function = new FunctionDeclarations(nameFunction.Value, result_K.Item2, result_M.Item2);
+                            Additional.Functions_global.Add(function.Name, function);
+                            return (result_M.Item1, function);
+                        }
+                        Error error_linq = new TypeError(ErrorCode.SyntacticError, " Where is => ?");
+                        App.Error(error_linq.Text());
+
+                    }
+                    Error error_open_paren = new TypeError(ErrorCode.SyntacticError, " Where is ( ?");
+                    App.Error(error_open_paren.Text());
+                }
+                Error error = new TypeError(ErrorCode.SyntacticError, " Where is identifier ?");
+                App.Error(error.Text());
+            }
+
+
+            // Llamado de funciones 
+            if (tokens[actual].Type == Token.TokenType.Identifier && Additional.Functions_global.ContainsKey(tokens[actual].Value))
+            {
+                if (tokens[actual].Type == Token.TokenType.Open_Paren)
+                {
+
+                }
+            }
+
+            /*
+             private SyntaxExpression ParseFunctionDeclaration()
+                {
+                    string name = MatchKind(SyntaxKind.IdentifierToken)._text ; 
+                    MatchKind(SyntaxKind.OpenParenthesisToken) ;
+
+                    List<string> parameters = new List<string>() ;
+
+                    while(Current._kind != SyntaxKind.CloseParenthesisToken)
+                    {
+                        string varName = MatchKind(SyntaxKind.IdentifierToken)._text ; 
+                        parameters.Add(varName) ;
+
+                        if(Current._kind != SyntaxKind.CloseParenthesisToken) // chequea que los parametros esten separados por comas excepto el ultimo.
+                        {
+                            MatchKind(SyntaxKind.CommaSeparatorToken) ;
+                        }
+
+                        if(ErrorHasOcurred)
+                        {                    
+                            GetToRecoveryPoint();  
+                            return new DeclaredFunctionExpression(null , new List<string>() , null);
+                        }
+                    }
+
+                    NextToken();
+                    MatchKind(SyntaxKind.ArrowToken);
+
+                    var body = ParseExpression();
+                    return new DeclaredFunctionExpression(name , parameters , body) ;
+                }
+                private SyntaxExpression ParseFunctionCallExpression()
+                {
+                    var name = NextToken()._text ;   // Nombre de la funcion
+                    MatchKind(SyntaxKind.OpenParenthesisToken);                     
+
+                    List<SyntaxExpression> args = new List<SyntaxExpression>() ;
+
+                    while(Current._kind != SyntaxKind.CloseParenthesisToken)
+                    {
+                        args.Add(ParseExpression()) ;
+
+                        if(Current._kind != SyntaxKind.CloseParenthesisToken)
+                        {   
+                            // chequea que a cada argumento le siga una coma excepto el ultimo       
+                            MatchKind(SyntaxKind.CommaSeparatorToken);
+                        }
+
+                        if(ErrorHasOcurred)
+                        {
+                            GetToRecoveryPoint();
+                            return new FunctionCallExpression(null , new List<SyntaxExpression>()) ;                 
+                        }
+                    }
+                    NextToken() ;  // Saltando el ) 
+
+                    return new FunctionCallExpression(name , args);
+                }    
+
+            */
             return A(tokens, actual, last);
         }
+
+        private static (int, List<Token>) K(List<Token> tokens, int actual, List<Token> arg)
+        {
+            if (tokens[actual].Type == Token.TokenType.Identifier)
+            {
+                arg.Add(tokens[actual]);
+                if (tokens[actual + 1].Type == Token.TokenType.Comma)
+                {
+                    return K(tokens, actual + 2, arg);
+                }
+            }
+
+            if (tokens[actual + 1].Type == Token.TokenType.Close_Paren && tokens[actual].Type == Token.TokenType.Identifier)
+            {
+                return (actual + 2, arg);
+            }
+
+            Error error = new TypeError(ErrorCode.SyntacticError, "Invalid Token " + tokens[actual + 1].Value);
+            App.Error(error.Text());
+            return (0, null)!;
+        }
+
         public static (int, Expressions) A(List<Token> tokens, int actual, Expressions last)
         {
             (int, Expressions) result_z;
@@ -187,6 +305,7 @@ namespace Hulk
             var result_X = X(tokens, result_F.Item1, result_F.Item2);
             return result_X;
         }
+
         public static (int, Expressions) X(List<Token> tokens, int actual, Expressions last)
         {
             if (tokens[actual].Type == Token.TokenType.Token_Sum)

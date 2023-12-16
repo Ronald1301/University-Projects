@@ -126,13 +126,5 @@ namespace Hulk
             {"@", new Token(TokenType.Token_Concat, "@")},
         };
 
-        // Diccionario donde asocio algunos tipos de token con las expresiones que conforman
-        public static Dictionary<Token, Expressions> Global = new Dictionary<Token, Expressions>();
-        public static string error = "";
-
-        public enum DataType
-        {
-            number,word,boolean,ID,function, error,
-        }
     }
 }

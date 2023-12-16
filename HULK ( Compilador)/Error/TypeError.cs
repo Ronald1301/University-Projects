@@ -6,7 +6,8 @@ namespace Hulk
 
         public string argument { get; }
 
-        public TypeError(ErrorCode code, string argument)
+        public 
+        TypeError(ErrorCode code, string argument)
         {
             this.Code = code;
             this.argument = argument;

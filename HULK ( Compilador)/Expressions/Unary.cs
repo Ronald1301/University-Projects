@@ -16,20 +16,20 @@ namespace Hulk
 
         }
 
-        public override Token.DataType CheckSemantic()
+        public override Additional.DataType CheckSemantic()
         {
             //revisar el operador  not
-            if (argument.CheckSemantic() == Token.DataType.number)
+            if (argument.CheckSemantic() == Additional.DataType.number)
             {
-                return Token.DataType.number;
+                return Additional.DataType.number;
             }
-            if (argument.CheckSemantic() == Token.DataType.boolean)
+            if (argument.CheckSemantic() == Additional.DataType.boolean)
             {
-                return Token.DataType.number;
+                return Additional.DataType.number;
             }
             Error error = new TypeError(ErrorCode.SemanticError, "The expression is not of type number or boolean");
             App.Error(error.Text());
-            return Token.DataType.error;
+            return Additional.DataType.error;
         }
 
         public override object Evaluate()

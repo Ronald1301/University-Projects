@@ -10,7 +10,7 @@ namespace Hulk
             this.argument = argument;
         }
 
-        public override Token.DataType CheckSemantic()
+        public override Additional.DataType CheckSemantic()
         {
             /*
             foreach (var item in where!.Declared_Type.Keys)
@@ -22,13 +22,13 @@ namespace Hulk
                 }
             }
             */
-            return 0;
+            return Additional.DataType.ID;
             throw new();
         }
 
         public override object Evaluate()
         {
-            Token.Global.Add(token,argument);
+            Additional.Global_variables.Add(token,argument);
             return 0;
         }
     }

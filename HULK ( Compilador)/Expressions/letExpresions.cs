@@ -10,7 +10,7 @@ namespace Hulk
            this.in_part=in_part;
         }
 
-        public override Token.DataType CheckSemantic()
+        public override Additional.DataType CheckSemantic()
         {
              let_part.CheckSemantic();
             return in_part.CheckSemantic();

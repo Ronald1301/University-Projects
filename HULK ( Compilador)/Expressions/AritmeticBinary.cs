@@ -17,15 +17,15 @@ namespace Hulk
             this.operators = operators;
         }
 
-        public override Token.DataType CheckSemantic()
+        public override Additional.DataType CheckSemantic()
         {
-            if (left.CheckSemantic() == Token.DataType.number && right.CheckSemantic() == Token.DataType.number)
+            if (left.CheckSemantic() == Additional.DataType.number && right.CheckSemantic() == Additional.DataType.number)
             {
-                return Token.DataType.number;
+                return Additional.DataType.number;
             }
             Error error = new TypeError(ErrorCode.SemanticError, "The expression is not of type number");
             App.Error(error.Text());
-            return Token.DataType.error;
+            return Additional.DataType.error;
         }
 
         public override object Evaluate()

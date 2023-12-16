@@ -4,7 +4,7 @@ namespace Hulk
     {
         public abstract object Evaluate();
 
-        public abstract Token.DataType CheckSemantic();
+        public abstract Additional.DataType CheckSemantic();
 
     }
 }
