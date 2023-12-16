@@ -53,6 +53,7 @@ namespace Hulk
                 Error error_open_paren = new TypeError(ErrorCode.SyntacticError, " Where is ( ?");
                 App.Error(error_open_paren.Text());
             }
+
             if (tokens[actual].Type == Token.TokenType.Token_Let)
             {
                 if (tokens[actual + 1].Type == Token.TokenType.Identifier)
@@ -124,16 +125,6 @@ namespace Hulk
                 App.Error(error.Text());
             }
 
-
-            // Llamado de funciones 
-            if (tokens[actual].Type == Token.TokenType.Identifier && Additional.Functions_global.ContainsKey(tokens[actual].Value))
-            {
-                if (tokens[actual].Type == Token.TokenType.Open_Paren)
-                {
-
-                }
-            }
-
             /*    
                 private SyntaxExpression ParseFunctionCallExpression()
                 {
@@ -185,6 +176,30 @@ namespace Hulk
 
             Error error = new TypeError(ErrorCode.SyntacticError, "Invalid Token " + tokens[actual + 1].Value);
             App.Error(error.Text());
+            return (0, null)!;
+        }
+        private static (int, List<Expressions>) U(List<Token> tokens, int actual, List<Expressions> last)
+        {
+            for (int i = actual; i < tokens.Count; i++)
+            {
+                var result_M = M(tokens, i);
+                last.Add(result_M.Item2);
+                if (tokens[result_M.Item1].Type == Token.TokenType.Comma)
+                {
+                    i = result_M.Item1;
+                    continue;
+                }
+                if (tokens[result_M.Item1].Type == Token.TokenType.Close_Paren)
+                {
+                    return (result_M.Item1, last);
+                }
+                Error error_close_paren = new TypeError(ErrorCode.SyntacticError, " Where is ) ?");
+                App.Error(error_close_paren.Text());
+                break;
+            }
+            Error error = new TypeError(ErrorCode.SyntacticError, "Invalid Expression");
+            App.Error(error.Text());
+
             return (0, null)!;
         }
 
@@ -393,10 +408,25 @@ namespace Hulk
                 {
                     return (result_M.Item1 + 1, result_M.Item2);
                 }
-                else throw new Exception();
+                Error error_close_paren = new TypeError(ErrorCode.SyntacticError, " Where is ) ?");
+                App.Error(error_close_paren.Text());
             }
             if (tokens[actual].Type == Token.TokenType.Identifier)
             {
+                foreach (var key in Additional.Functions_global.Keys)
+                {
+                    if (key == tokens[actual].Value)
+                    {
+                        if (tokens[actual + 1].Type == Token.TokenType.Open_Paren)
+                        {
+                            Token func = tokens[actual];
+                            var result_U = U(tokens, actual + 2, new());
+                            FunCall function_call = new FunCall(Additional.Functions_global[key], result_U.Item2);
+                            return (result_U.Item1 + 1, function_call);
+                        }
+                        break;
+                    }
+                }
                 return (actual + 1, new iDExpresions(tokens[actual]));
             }
             if (tokens[actual].Type == Token.TokenType.Close_Paren)
@@ -405,5 +435,6 @@ namespace Hulk
             }
             throw new Exception();
         }
+
     }
 }
