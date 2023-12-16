@@ -18,9 +18,16 @@ namespace Hulk
             {
 
                 var result = Parser.L(LexicalAnalyzer.Tokenize(line.ToLower()), 0);
-                //var ok = result.Item2.CheckSemantic();
-                Console.WriteLine(result.Item2.Evaluate());
-                SelectKey();
+                var check = result.Item2.CheckSemantic();
+
+                if (Additional.declared_func)
+                {
+                    Additional.declared_func = false;
+                    SelectKey();
+                }
+                else
+                    Console.WriteLine(result.Item2.Evaluate());
+                    SelectKey();
 
             }
             if (key == ConsoleKey.Escape)

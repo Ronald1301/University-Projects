@@ -94,7 +94,7 @@ namespace Hulk
                     if (Additional.Functions_global.ContainsKey(tokens[actual + 1].Value))
                     {
                         Error error_func_existe = new TypeError(ErrorCode.SyntacticError, "That function already exists");
-                    App.Error(error_func_existe.Text());
+                        App.Error(error_func_existe.Text());
                     }
 
                     Token nameFunction = tokens[actual + 1];
@@ -106,10 +106,12 @@ namespace Hulk
 
                         if (tokens[actual].Type == Token.TokenType.Token_LINQ)
                         {
+                            Additional.declared_func = true;
                             var result_M = M(tokens, actual + 1);
                             FunctionDeclarations function = new FunctionDeclarations(nameFunction.Value, result_K.Item2, result_M.Item2);
                             Additional.Functions_global.Add(function.Name, function);
                             return (result_M.Item1, function);
+
                         }
                         Error error_linq = new TypeError(ErrorCode.SyntacticError, " Where is => ?");
                         App.Error(error_linq.Text());
@@ -132,37 +134,7 @@ namespace Hulk
                 }
             }
 
-            /*
-             private SyntaxExpression ParseFunctionDeclaration()
-                {
-                    string name = MatchKind(SyntaxKind.IdentifierToken)._text ; 
-                    MatchKind(SyntaxKind.OpenParenthesisToken) ;
-
-                    List<string> parameters = new List<string>() ;
-
-                    while(Current._kind != SyntaxKind.CloseParenthesisToken)
-                    {
-                        string varName = MatchKind(SyntaxKind.IdentifierToken)._text ; 
-                        parameters.Add(varName) ;
-
-                        if(Current._kind != SyntaxKind.CloseParenthesisToken) // chequea que los parametros esten separados por comas excepto el ultimo.
-                        {
-                            MatchKind(SyntaxKind.CommaSeparatorToken) ;
-                        }
-
-                        if(ErrorHasOcurred)
-                        {                    
-                            GetToRecoveryPoint();  
-                            return new DeclaredFunctionExpression(null , new List<string>() , null);
-                        }
-                    }
-
-                    NextToken();
-                    MatchKind(SyntaxKind.ArrowToken);
-
-                    var body = ParseExpression();
-                    return new DeclaredFunctionExpression(name , parameters , body) ;
-                }
+            /*    
                 private SyntaxExpression ParseFunctionCallExpression()
                 {
                     var name = NextToken()._text ;   // Nombre de la funcion

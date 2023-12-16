@@ -10,6 +10,7 @@ namespace Hulk
         public static Dictionary<string, List<Token>> FuncDeclaredParams = new Dictionary<string, List<Token>>();
         public static Dictionary<string, Expressions> FuncDeclaredBody = new Dictionary<string, Expressions>();
         public static string error = "";
+        public static bool declared_func;
 
 
         public enum DataType
