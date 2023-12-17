@@ -90,22 +90,24 @@ namespace Hulk
             //Declaración de funciones 
             if (tokens[actual].Type == Token.TokenType.Token_Function)
             {
-                if (tokens[actual + 1].Type == Token.TokenType.Identifier || Additional.Func_Predef(tokens[actual + 1]))
+                if (Additional.Search_LINQ(tokens, actual + 1))
                 {
-                    if (Additional.Search_LINQ(tokens, actual + 1))
+                    if (tokens[actual + 1].Type == Token.TokenType.Identifier || Additional.Func_Predef(tokens[actual + 1]))
                     {
                         Token nameFunction = tokens[actual + 1];
 
                         if (tokens[actual + 2].Type == Token.TokenType.Open_Paren)
                         {
-                            (int, List<Token>) result_K = K(tokens, actual + 3, new());
+                            var result_K = K(tokens, actual + 3, new List<Token>());
                             actual = result_K.Item1;
 
                             if (tokens[actual].Type == Token.TokenType.Token_LINQ)
                             {
                                 Additional.declared_func = true;
+
+                                FunctionDeclarations function = new FunctionDeclarations(nameFunction.Value, result_K.Item2, null!);
                                 var result_M = M(tokens, actual + 1);
-                                FunctionDeclarations function = new FunctionDeclarations(nameFunction.Value, result_K.Item2, result_M.Item2);
+                                function.Body = result_M.Item2;
 
                                 if (Additional.Check_Exist_Func(nameFunction.Value, function.Params.Count))
                                 {
@@ -122,9 +124,9 @@ namespace Hulk
                         Error error_open_paren = new TypeError(ErrorCode.SyntacticError, " Where is ( ?");
                         App.Error(error_open_paren.Text());
                     }
+                    Error error = new TypeError(ErrorCode.SyntacticError, " Where is identifier ?");
+                    App.Error(error.Text());
                 }
-                Error error = new TypeError(ErrorCode.SyntacticError, " Where is identifier ?");
-                App.Error(error.Text());
             }
 
             return A(tokens, actual, last);

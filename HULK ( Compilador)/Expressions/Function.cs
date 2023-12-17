@@ -57,7 +57,8 @@ namespace Hulk
             int Count = 0;
             foreach (var item in Arguments)
             {
-                Additional.Func_Call_Params.Add(Function.Params[Count], item.Evaluate());
+                Additional.Func_Call_Params[Function.Params[Count]]= new Stack<object>();
+                Additional.Func_Call_Params[Function.Params[Count]].Push(item.Evaluate());
                 Count += 1;
             }
             return Function.Body.Evaluate();

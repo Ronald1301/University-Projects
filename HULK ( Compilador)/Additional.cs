@@ -1,3 +1,4 @@
+
 namespace Hulk
 {
 
@@ -5,10 +6,10 @@ namespace Hulk
     {
         // Diccionario donde asocio algunos tipos de token con las expresiones que conforman
         public static Dictionary<Token, Expressions> Global_variables = new Dictionary<Token, Expressions>();
-        //public static List<FunctionDeclarations> functionDeclarations = new List<FunctionDeclarations>();
         public static Dictionary<string, FunctionDeclarations> Functions_global = new Dictionary<string, FunctionDeclarations>();
-        public static Dictionary<Token, object> Func_Call_Params = new Dictionary<Token, object>();
+        public static Dictionary<Token, Stack<object>> Func_Call_Params = new Dictionary<Token, Stack<object>>();
         //public static Dictionary<string, Expressions> FuncDeclaredBody = new Dictionary<string, Expressions>();
+         //public static List<FunctionDeclarations> functionDeclarations = new List<FunctionDeclarations>();
         public static string error = "";
         public static bool declared_func;
         public static bool call_func;
