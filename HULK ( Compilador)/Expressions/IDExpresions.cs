@@ -26,7 +26,13 @@ namespace Hulk
             {
                 foreach (var item in Additional.Func_Call_Params.Keys)
                 {
-                   if (token.Value == item.Value) return Additional.Func_Call_Params[item].Pop();
+                    if (Additional.if_expression_active || Additional.cant_vaces_variables_en_func>=1)
+                    {
+                        Additional.if_expression_active = false;
+                        Additional.cant_vaces_variables_en_func-=1;
+                        return Additional.Func_Call_Params[item].Peek();
+                    }
+                     if (token.Value == item.Value) return Additional.Func_Call_Params[item].Pop();
                 }
             }
             else

@@ -4,8 +4,8 @@ namespace Hulk
     {
         static void Main(string[] args)
         {
-            //App.Presentation();
-
+            App.Presentation();
+/*
 
             //string line  = "let x=10 , y=5 in x+y;";
             //string line = "print(sin(2 * PI) ^ 2 + cos(3 * PI / log(5)));";
@@ -25,20 +25,23 @@ namespace Hulk
             System.Console.WriteLine(ok);
             Console.WriteLine(result.Item2.Evaluate());
 
-
+            Additional.declared_func = false;
+            Additional.call_func = false;
+            Additional.if_expression_active = true;
+            Additional.created_stack = false;
             #region 
 
             //string line2 = "Prueba(2,3,4,6);";
             //string line2 = "print(tan(PI*2/3));";
             //string line2 = "fib(1)";
-            string line2="Fact(2)";
+            string line2 = "Fact(2);";
             var result_2 = Parser.L(LexicalAnalyzer.Tokenize(line2.ToLower()), 0);
             var ok2 = result.Item2.CheckSemantic();
             System.Console.WriteLine(ok2);
             Console.WriteLine(result_2.Item2.Evaluate());
 
             #endregion
-
+*/
 
         }
     }

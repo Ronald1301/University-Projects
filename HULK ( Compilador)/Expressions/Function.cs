@@ -10,6 +10,7 @@ namespace Hulk
         public FunctionDeclarations(string name, List<Token> param, Expressions body)
         {
             Name = name;
+            Additional.Functions_global.Add(Name, null!);
             Params = param;
             Body = body;
         }
@@ -57,7 +58,11 @@ namespace Hulk
             int Count = 0;
             foreach (var item in Arguments)
             {
-                Additional.Func_Call_Params[Function.Params[Count]]= new Stack<object>();
+                if (!Additional.created_stack)
+                {
+                    Additional.Func_Call_Params[Function.Params[Count]] = new Stack<object>();
+                    Additional.created_stack = true;
+                } 
                 Additional.Func_Call_Params[Function.Params[Count]].Push(item.Evaluate());
                 Count += 1;
             }

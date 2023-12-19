@@ -23,10 +23,15 @@ namespace Hulk
                 if (Additional.declared_func)
                 {
                     Additional.declared_func = false;
+                    Additional.call_func=false;
+                    Additional.if_expression_active=true;
+                    Additional.created_stack=false;
                     SelectKey();
                 }
                 else
                     Console.WriteLine(result.Item2.Evaluate());
+                    Additional.if_expression_active=true;
+                    Additional.created_stack=false;
                     SelectKey();
 
             }
