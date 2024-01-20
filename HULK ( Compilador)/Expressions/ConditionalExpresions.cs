@@ -23,7 +23,7 @@ namespace Hulk
 
         public override object Evaluate()
         {
-            Additional.if_expression_active = true;
+           // Additional.if_expression_active = true;
             if ((bool)condition.Evaluate()) return body.Evaluate();
             return alternative.Evaluate();
         }

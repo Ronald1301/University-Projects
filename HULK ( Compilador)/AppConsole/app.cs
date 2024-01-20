@@ -18,21 +18,21 @@ namespace Hulk
             {
 
                 var result = Parser.L(LexicalAnalyzer.Tokenize(line.ToLower()), 0);
-                var check = result.Item2.CheckSemantic();
+                //var check = result.Item2.CheckSemantic();
 
                 if (Additional.declared_func)
                 {
                     Additional.declared_func = false;
-                    Additional.call_func=false;
-                    Additional.if_expression_active=true;
-                    Additional.created_stack=false;
+                    Additional.call_func = false;
+                    Additional.if_expression_active = true;
+                    Additional.created_stack = false;
                     SelectKey();
                 }
                 else
                     Console.WriteLine(result.Item2.Evaluate());
-                    Additional.if_expression_active=true;
-                    Additional.created_stack=false;
-                    SelectKey();
+                Additional.if_expression_active = true;
+                Additional.created_stack = false;
+                SelectKey();
 
             }
             if (key == ConsoleKey.Escape)

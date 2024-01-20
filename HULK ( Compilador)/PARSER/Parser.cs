@@ -65,8 +65,9 @@ namespace Hulk
 
                         if (tokens[result_let.Item1].Type == Token.TokenType.Comma)
                         {
-                            tokens.Insert(result_let.Item1 + 1, new Token(Token.TokenType.Token_Let, "let"));
-                            return M(tokens, result_let.Item1 + 1);
+                            tokens.Insert(result_let.Item1 + 1, new Token(Token.TokenType.Token_In, "in"));
+                            tokens.Insert(result_let.Item1 + 2, new Token(Token.TokenType.Token_Let, "let"));
+                            result_let.Item1 += 1;
                             //Expressions id2 = new Assignment(tokens[actual + 1], result.Item2);
                             // Expressions second=new LetExpresions(id,result.Item2);
                             //return (result.Item1, second);
@@ -104,7 +105,7 @@ namespace Hulk
                             if (tokens[actual].Type == Token.TokenType.Token_LINQ)
                             {
                                 Additional.declared_func = true;
-                                Additional.cant_vaces_variables_en_func=0;
+                                //Additional.cant_vaces_variables_en_func=0;
                                 FunctionDeclarations function = new FunctionDeclarations(nameFunction.Value, result_K.Item2, null!);
                                 var result_M = M(tokens, actual + 1);
                                 function.Body = result_M.Item2;
@@ -406,7 +407,7 @@ namespace Hulk
                         {
                             Additional.call_func = true;
                             if(Additional.func_recursive)Additional.Insert_params_recursivos(tokens,actual+2);
-                            if(Additional.declared_func) Additional.func_recursive=true;
+                           // if(Additional.declared_func) Additional.func_recursive=true;
                             var result_U = U(tokens, actual + 2, new());
                             FunCall function_call = new FunCall(Additional.Functions_global[key], result_U.Item2);
                             
